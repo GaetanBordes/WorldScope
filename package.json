@@ -1,0 +1,13 @@
+{
+  "name": "worldscope",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+  "start:backend": "npm --prefix backend run dev",
+  "start:frontend": "npm --prefix frontend run dev",
+  "dev": "concurrently -k \"npm run start:backend\" \"npm run start:frontend\""
+},
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}

@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// === Modèles de données initiales ===
+
+model User {
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  password      String
+  emailVerified Boolean   @default(false)    // ← Ajouté ici
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relation inverse vers Badge
+  badges        Badge[]
+}
+
+model Badge {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+
+  // Relation vers l’utilisateur (optionnelle)
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      Int?
+}

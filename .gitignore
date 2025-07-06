@@ -1,0 +1,60 @@
+# === Node.js ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+build/
+
+# === Env files ===
+.env
+.env.*          # ex: .env.local, .env.production
+
+# === Vite cache ===
+.vite/
+
+# === OS / Editor ===
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# === Log files ===
+*.log
+logs/
+*.pid
+*.seed
+*.tgz
+
+# === Frontend build/cache ===
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.DS_Store
+
+# === Backend build/cache ===
+backend/node_modules/
+backend/.DS_Store
+backend/prisma/dev.db
+backend/prisma/dev.db-journal
+backend/.env
+
+# === Data ===
+backend/data/*.csv
+backend/data/*.geojson
+*.sqlite
+
+# === Prisma generated ===
+backend/prisma/migrations/
+backend/prisma/generated/
+
+# === Others ===
+coverage/
+*.bak
+*.tmp
+*.log
+*.zip
+
+# === Ngrok cache or tokens (if used) ===
+.ngrok*

@@ -1,0 +1,70 @@
+.timeline-container {
+  position: absolute;
+  top: 3.5rem;   /* juste sous la navbar */
+  left: 0;
+  width: 260px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  &.open {
+    pointer-events: auto;
+    opacity: 1;
+  }
+
+  .timeline-toggle {
+    position: absolute;
+    top: 0;
+    right: -24px;
+    width: 24px;
+    height: 24px;
+    background: #2c3e50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+  }
+
+  .timeline-controls {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0.75rem;
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+
+      input[type="range"],
+      input[type="number"] {
+        width: 100%;
+        margin-top: 0.25rem;
+      }
+    }
+
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.25rem;
+      max-height: 200px;
+      overflow-y: auto;
+      margin-top: 0.5rem;
+
+      label {
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+
+        input {
+          margin-right: 0.25rem;
+        }
+      }
+    }
+  }
+}
+
+/* S’assure que la carte est en dessous et interactive */
+.leaflet-container {
+  z-index: 0;
+}
