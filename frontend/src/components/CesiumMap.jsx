@@ -7,8 +7,17 @@ export default function CesiumMap({ incidents = [] }) {
 
   useEffect(() => {
     let viewer;
+    let isMounted = true;
+
     if (containerRef.current && window.Cesium) {
-      const { Ion, Viewer, Cartesian3, Color } = window.Cesium;
+      const {
+        Ion,
+        Viewer,
+        Cartesian3,
+        Color,
+        IonImageryProvider
+      } = window.Cesium;
+
       Ion.defaultAccessToken = import.meta.env.VITE_CESIUM_ION_TOKEN;
 
       viewer = new Viewer(containerRef.current, {
@@ -20,11 +29,18 @@ export default function CesiumMap({ incidents = [] }) {
         navigationHelpButton: true,
         infoBox: true,
         sceneMode: window.Cesium.SceneMode.SCENE3D,
-        shouldAnimate: true
-        // **PAS d'imageryProvider**
+        shouldAnimate: true,
+        imageryProvider: window.Cesium.IonImageryProvider.fromAssetId(2), // Bing Maps Aerial
       });
 
-      // Optionnel : active la lumière du soleil
+      // Ajoute la couche de labels (Bing Maps)
+      window.Cesium.IonImageryProvider.fromAssetId(2411391).then((provider) => {
+        if (isMounted && viewer && !viewer.isDestroyed()) {
+          viewer.imageryLayers.addImageryProvider(provider);
+        }
+      });
+
+      // Lumière du soleil
       viewer.scene.globe.enableLighting = true;
 
       // Ajoute les incidents
@@ -35,8 +51,7 @@ export default function CesiumMap({ incidents = [] }) {
           typeof evt.lon !== "number" ||
           isNaN(evt.lat) ||
           isNaN(evt.lon)
-        )
-          return;
+        ) return;
 
         const color =
           evt.type === "Battles"
@@ -58,9 +73,11 @@ export default function CesiumMap({ incidents = [] }) {
       });
 
       if (incidents.length > 0) viewer.zoomTo(viewer.entities);
+      else viewer.camera.flyHome(0);
     }
 
     return () => {
+      isMounted = false;
       if (viewer && !viewer.isDestroyed()) viewer.destroy();
     };
   }, [incidents]);
