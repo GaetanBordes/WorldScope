@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^1.10.0",
+    "cesium": "^1.131.0",
     "leaflet": "^1.9.4",
     "maplibre-gl": "^5.6.1",
     "react": "^19.1.0",
@@ -17,6 +18,7 @@
     "react-leaflet": "^5.0.0",
     "react-router-dom": "^7.6.3",
     "sass": "^1.89.2",
+    "vite-plugin-cesium": "^1.2.23",
     "zustand": "^5.0.6"
   },
   "devDependencies": {
