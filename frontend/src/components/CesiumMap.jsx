@@ -7,7 +7,6 @@ export default function CesiumMap({ incidents = [] }) {
 
   useEffect(() => {
     let viewer;
-    let isMounted = true;
 
     if (containerRef.current && window.Cesium) {
       const {
@@ -15,11 +14,12 @@ export default function CesiumMap({ incidents = [] }) {
         Viewer,
         Cartesian3,
         Color,
-        IonImageryProvider
+        IonImageryProvider,
       } = window.Cesium;
 
       Ion.defaultAccessToken = import.meta.env.VITE_CESIUM_ION_TOKEN;
 
+      // 1️⃣ Crée le Viewer sans imageryProvider (sinon bug planète bleue)
       viewer = new Viewer(containerRef.current, {
         baseLayerPicker: false,
         animation: false,
@@ -30,17 +30,16 @@ export default function CesiumMap({ incidents = [] }) {
         infoBox: true,
         sceneMode: window.Cesium.SceneMode.SCENE3D,
         shouldAnimate: true,
-        imageryProvider: window.Cesium.IonImageryProvider.fromAssetId(2), // Bing Maps Aerial
+        imageryProvider: false, // <-- IMPORTANT !
       });
 
-      // Ajoute la couche de labels (Bing Maps)
-      window.Cesium.IonImageryProvider.fromAssetId(2411391).then((provider) => {
-        if (isMounted && viewer && !viewer.isDestroyed()) {
-          viewer.imageryLayers.addImageryProvider(provider);
-        }
+      // 2️⃣ Remplace le layer par Bing Maps Aerial with Labels
+      IonImageryProvider.fromAssetId(3).then((provider) => {
+        viewer.imageryLayers.removeAll();
+        viewer.imageryLayers.addImageryProvider(provider);
       });
 
-      // Lumière du soleil
+      // Lumière du soleil activée
       viewer.scene.globe.enableLighting = true;
 
       // Ajoute les incidents
@@ -51,7 +50,8 @@ export default function CesiumMap({ incidents = [] }) {
           typeof evt.lon !== "number" ||
           isNaN(evt.lat) ||
           isNaN(evt.lon)
-        ) return;
+        )
+          return;
 
         const color =
           evt.type === "Battles"
@@ -77,7 +77,6 @@ export default function CesiumMap({ incidents = [] }) {
     }
 
     return () => {
-      isMounted = false;
       if (viewer && !viewer.isDestroyed()) viewer.destroy();
     };
   }, [incidents]);
