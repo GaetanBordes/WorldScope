@@ -39,20 +39,19 @@
   }
 
   .menu-close-btn {
-    font-size: 1.25em;
-    background: transparent;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    margin-left: 7px;
-    padding: 0 2px;
-    line-height: 1;
-    z-index: 20;
-    transition: color 0.18s;
-  }
-  .menu-close-btn:hover {
-    color: #ff596a;
-  }
+  font-size: 1.3em;
+  background: transparent;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  z-index: 20;
+  transition: color 0.18s;
+  padding: 0 2px;
+}
+
+.menu-close-btn:hover {
+  color: #ff596a;
+}
 
   .filter-header-row {
     display: flex;

@@ -2,28 +2,10 @@ import React, { useEffect, useState } from "react";
 import CesiumMap from "../components/CesiumMap";
 import "./MapPage.scss";
 
-// Listes fixes pour filtres (adaptables)
+// Mapping entre valeur anglaise (base) et label français (affichage)
 const EVENT_TYPES = [
-  "Batailles",
-  "Émeutes",
-  "Protestations",
-  "Violences contre les civils",
-];
-const EVENT_SUBTYPES = [
-  "Manifestation violente",
-  "Protestation avec intervention",
-  "Manifestation pacifique",
-  "Pillage/destruction de biens",
-  "Force excessive contre les manifestants",
-  "Arrestations",
-  "Enlèvement/disparition forcée",
-];
-const ACTOR_TYPES = [
-  "Forces de l'État",
-  "Groupe rebelle",
-  "Civils",
-  "Émeutiers",
-  "Manifestants",
+  { value: "Battles", label: "Batailles" },
+  { value: "Violence against civilians", label: "Violences contre les civils" },
 ];
 
 const START_DATE = "2023-08-31";
@@ -44,8 +26,6 @@ export default function MapPage() {
   const [incidents, setIncidents] = useState([]);
   const [filters, setFilters] = useState({
     type: "",
-    subType: "",
-    actorType: "",
     start: START_DATE,
     end: END_DATE,
   });
@@ -62,19 +42,15 @@ export default function MapPage() {
         const formatted = data.map(evt => ({
           lat: +evt.latitude,
           lon: +evt.longitude,
-          type: evt["Type d'événement"] || evt.event_type,
-          subType: evt["Sous-type d'événement"] || evt.sub_type,
-          actorType: evt["Type d'acteur"] || evt.actor_type,
-          actor: evt["Acteur"] || evt.actor,
+          type: evt["event_type"] || evt["Type d'événement"] || evt.type,
           country: evt.country,
-          date: evt.event_date, // format "2024-05-19" ou "31 August 2023"
+          date: evt.event_date,
         }));
         setIncidents(formatted);
       })
       .catch(console.error);
   }, []);
 
-  // Utilitaires pour dates
   function isDateInRange(date, start, end) {
     if (!date) return false;
     const d = date.split(" ")[0].includes("-") ? date : formatToIso(date);
@@ -94,20 +70,16 @@ export default function MapPage() {
     }
   }
 
-  // Filtrage incidents (seulement si showPoints)
   const filteredIncidents = showPoints
     ? incidents.filter(evt =>
         (!filters.type || evt.type === filters.type) &&
-        (!filters.subType || evt.subType === filters.subType) &&
-        (!filters.actorType || evt.actorType === filters.actorType) &&
         isDateInRange(evt.date, filters.start, filters.end)
       )
     : [];
 
-  // ---- JSX ----
   return (
     <div className="map-page">
-      {/* BOUTON BURGER MOBILE */}
+      {/* BURGER mobile */}
       {isMobile && !showMenuMobile && (
         <button
           className="filter-burger"
@@ -148,67 +120,38 @@ export default function MapPage() {
               : {})
           }}
         >
-          {/* HEADER ligne: checkbox + texte + CROIX (mobile) */}
-          <div style={{ display: "flex", alignItems: "center", marginBottom: 3 }}>
-            <label style={{ flex: 1, marginBottom: 0 }}>
+          {/* Label + croix sur la même ligne */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <label style={{ flex: 1, display: "flex", alignItems: "center" }}>
               <input
                 type="checkbox"
                 checked={showPoints}
                 onChange={e => setShowPoints(e.target.checked)}
+                style={{ marginRight: 5 }}
               />
               <b>Afficher les points</b>
             </label>
-            {isMobile && showMenuMobile && (
+            {/* Croix visible seulement en mobile */}
+            {isMobile && (
               <button
                 className="menu-close-btn"
                 aria-label="Fermer le menu"
-                onClick={() => setShowMenuMobile(false)}
                 style={{
-                  fontSize: "1.3em",
-                  background: "transparent",
-                  color: "#fff",
-                  border: "none",
-                  cursor: "pointer",
-                  marginLeft: 7,
-                  padding: 0,
-                  lineHeight: 1
+                  fontSize: "1.35em", color: "#fff", background: "transparent",
+                  border: 0, cursor: "pointer", marginLeft: 5, marginTop: -1, padding: "0 2px"
                 }}
-                tabIndex={0}
+                onClick={() => setShowMenuMobile(false)}
               >&#10006;</button>
             )}
           </div>
-
           <select
             disabled={!showPoints}
             value={filters.type}
             onChange={e => setFilters(f => ({ ...f, type: e.target.value }))}
-            style={{ width: "100%", maxWidth: "100%" }}
           >
             <option value="">Type d'événement (tous)</option>
             {EVENT_TYPES.map(type =>
-              <option key={type} value={type}>{type}</option>
-            )}
-          </select>
-          <select
-            disabled={!showPoints}
-            value={filters.subType}
-            onChange={e => setFilters(f => ({ ...f, subType: e.target.value }))}
-            style={{ width: "100%", maxWidth: "100%" }}
-          >
-            <option value="">Sous-type (tous)</option>
-            {EVENT_SUBTYPES.map(sub =>
-              <option key={sub} value={sub}>{sub}</option>
-            )}
-          </select>
-          <select
-            disabled={!showPoints}
-            value={filters.actorType}
-            onChange={e => setFilters(f => ({ ...f, actorType: e.target.value }))}
-            style={{ width: "100%", maxWidth: "100%" }}
-          >
-            <option value="">Type d'acteur (tous)</option>
-            {ACTOR_TYPES.map(a =>
-              <option key={a} value={a}>{a}</option>
+              <option key={type.value} value={type.value}>{type.label}</option>
             )}
           </select>
           <div style={{ margin: "9px 0" }}>
@@ -241,8 +184,6 @@ export default function MapPage() {
           </div>
         </div>
       )}
-
-      {/* LA CARTE */}
       <CesiumMap incidents={filteredIncidents} />
     </div>
   );
