@@ -5,3 +5,19 @@
   top: 0;
   left: 0;
 }
+.map-filter-menu {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(28, 32, 41, 0.92);
+  border-radius: 8px;
+  padding: 18px 14px;
+  z-index: 10;
+  color: white;
+  box-shadow: 0 2px 12px 0 #1119;
+  min-width: 240px;
+}
+.map-filter-menu label, .map-filter-menu select, .map-filter-menu input[type="date"] {
+  display: block;
+  margin-bottom: 7px;
+}
