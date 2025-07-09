@@ -1,76 +1,82 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import useAuthStore from '../stores/authStore';
-import './Navbar.scss';
+import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import useAuthStore from "../stores/authStore";
+import "./Navbar.scss";
 
 export default function Navbar() {
-  // Récupère token, user et action de logout depuis le store
-  const token     = useAuthStore(state => state.token);
-  const user      = useAuthStore(state => state.user);
-  const clearAuth = useAuthStore(state => state.clearAuth);
-  const navigate  = useNavigate();
-  const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { user, setAuth, clearAuth } = useAuthStore();
+  const location = useLocation();
+  const navigate = useNavigate();
 
+  const closeMenu = () => setMenuOpen(false);
+
+  // Liens du menu
+  const links = [
+    { to: "/", label: "Accueil" },
+    { to: "/map", label: "Carte" },
+    { to: "/profile", label: "Profil" },
+  ];
+
+  // Gère la déconnexion
   const handleLogout = () => {
-    clearAuth();
-    navigate('/login');
-    setOpen(false);
+    // Préfère clearAuth ou setAuth(null) selon ton store
+    if (typeof clearAuth === "function") clearAuth();
+    else if (typeof setAuth === "function") setAuth(null);
+    closeMenu();
+    navigate("/login");
   };
 
   return (
-    <nav className="navbar">
-      <div className="navbar__brand">
-        <Link to="/">Worldscope</Link>
+    <nav className="navbar-glass">
+      <div className="navbar-globe-brand">
+        <Link to="/" onClick={closeMenu}>
+          <img
+            src="/VERT_worldscope.webp"
+            alt="WorldScope"
+            className="navbar-logo"
+          />
+          <span>Worldscope</span>
+        </Link>
       </div>
 
       <button
-        className="navbar__toggle"
+        className={`navbar-toggle${menuOpen ? " open" : ""}`}
         aria-label="Menu"
-        onClick={() => setOpen(o => !o)}
+        onClick={() => setMenuOpen((v) => !v)}
       >
-        ☰
+        <div className="bar"></div>
+        <div className="bar"></div>
+        <div className="bar"></div>
       </button>
 
-      <ul className={`navbar__links ${open ? 'navbar__links--open' : ''}`}>
-        {token ? (
-          <>
-            <li>
-              <Link to="/dashboard" onClick={() => setOpen(false)}>
-                Accueil
-              </Link>
-            </li>
-            <li>
-              <Link to="/map" onClick={() => setOpen(false)}>
-                Carte
-              </Link>
-            </li>
-            <li>
-              <Link to="/profile" onClick={() => setOpen(false)}>
-                Profil
-              </Link>
-            </li>
-            {user && (
-              <li className="navbar__greeting">
-                Bonjour, {user.email.split('@')[0]}
-              </li>
-            )}
-            <li>
-              <button onClick={handleLogout}>Déconnexion</button>
-            </li>
-          </>
-        ) : (
-          <>
-            <li>
-              <Link to="/login" onClick={() => setOpen(false)}>
-                Se connecter
-              </Link>
-            </li>
-            <li>
-              <Link to="/signup" onClick={() => setOpen(false)}>
-                S’inscrire
-              </Link>
-            </li>
-          </>
+      <ul className={`navbar-links${menuOpen ? " open" : ""}`}>
+        {links.map((l) => (
+          <li key={l.to}>
+            <Link
+              to={l.to}
+              className={location.pathname === l.to ? "active" : ""}
+              onClick={closeMenu}
+            >
+              {l.label}
+            </Link>
+          </li>
+        ))}
+
+        {user && (
+          <li className="navbar-greeting">
+            <span>
+              <i>Bonjour, {user.email?.split("@")[0] || "explorateur"}</i>
+            </span>
+          </li>
+        )}
+
+        {user && (
+          <li>
+            <button className="navbar-logout" onClick={handleLogout}>
+              Déconnexion
+            </button>
+          </li>
         )}
       </ul>
     </nav>
