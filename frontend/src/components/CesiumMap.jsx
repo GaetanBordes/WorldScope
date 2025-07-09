@@ -36,13 +36,16 @@ export default function CesiumMap({ incidents = [] }) {
         imageryProvider: false, // IMPORTANT pour éviter planète bleue
       });
 
+      // 🟢 Limite de zoom/dézoom !
+      viewer.scene.screenSpaceCameraController.minimumZoomDistance = 100;        // ~100m min du sol
+      viewer.scene.screenSpaceCameraController.maximumZoomDistance = 18000000;   // ~18000 km max
+
       // Charge le Bing Maps Aerial with Labels
       IonImageryProvider.fromAssetId(3).then((provider) => {
         if (destroyed || !viewer || viewer.isDestroyed()) return;
         viewer.imageryLayers.removeAll();
         viewer.imageryLayers.addImageryProvider(provider);
 
-        // Accès au globe uniquement si viewer valide
         if (viewer.scene && viewer.scene.globe) {
           viewer.scene.globe.enableLighting = false;
         }
@@ -58,7 +61,9 @@ export default function CesiumMap({ incidents = [] }) {
         ) return;
         const colorKey = TYPE_COLORS[evt.type] || "WHITE";
         const color = Color[colorKey] || Color.WHITE;
+
         viewer.entities.add({
+          name: evt.country || "Pays inconnu", // <- Titre du popup
           position: Cartesian3.fromDegrees(evt.lon, evt.lat),
           point: {
             pixelSize: 10,
@@ -66,10 +71,10 @@ export default function CesiumMap({ incidents = [] }) {
             outlineColor: Color.BLACK,
             outlineWidth: 2,
           },
-          description: `<strong>${evt.type || ""}</strong><br/>
-                        <em>${evt.subType || ""}</em><br/>
-                        <span>${evt.actor || ""}</span><br/>
-                        ${evt.country}<br/>${evt.date}`,
+          description: `
+            <b>${evt.type || ""}</b><br/>
+            ${evt.date || ""}
+          `,
         });
       });
 
