@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CesiumMap from "../components/CesiumMap";
 import "./MapPage.scss";
+import MapFilterMenu from "../components/MapFilterMenu";
 
 // Mapping entre valeur anglaise (base) et label français (affichage)
 const EVENT_TYPES = [

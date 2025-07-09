@@ -1,7 +1,7 @@
 import React from "react";
 import "./MapFilterMenu.scss";
 
-// Les valeurs de l'API en anglais, labels en français pour l'UI si tu veux
+// Types, sous-types et acteurs (labels + valeurs, en français)
 const EVENT_TYPES = [
   { value: "Battles", label: "Batailles" },
   { value: "Riots", label: "Émeutes" },
@@ -28,14 +28,14 @@ const ACTOR_TYPES = [
 export default function MapFilterMenu({
   showPoints, setShowPoints,
   filters, setFilters,
-  onClose, // permet de fermer le menu mobile si tu veux
+  onClose,
   isMobile = false
 }) {
   return (
     <div className="map-filter-menu compact">
-      {/* Header ligne: label + croix mobile */}
-      <div style={{ display: "flex", alignItems: "center", marginBottom: 3 }}>
-        <label style={{ flex: 1, marginBottom: 0 }}>
+      {/* Entête */}
+      <div className="filter-header-row">
+        <label className="checkbox-label">
           <input
             type="checkbox"
             checked={showPoints}
@@ -48,16 +48,6 @@ export default function MapFilterMenu({
             className="menu-close-btn"
             aria-label="Fermer le menu"
             onClick={onClose}
-            style={{
-              fontSize: "1.3em",
-              background: "transparent",
-              color: "#fff",
-              border: "none",
-              cursor: "pointer",
-              marginLeft: 7,
-              padding: 0,
-              lineHeight: 1
-            }}
             tabIndex={0}
           >&#10006;</button>
         )}
@@ -67,7 +57,6 @@ export default function MapFilterMenu({
         disabled={!showPoints}
         value={filters.type}
         onChange={e => setFilters(f => ({ ...f, type: e.target.value }))}
-        style={{ width: "100%", maxWidth: "100%" }}
       >
         <option value="">Type d'événement (tous)</option>
         {EVENT_TYPES.map(type =>
@@ -78,7 +67,6 @@ export default function MapFilterMenu({
         disabled={!showPoints}
         value={filters.subType}
         onChange={e => setFilters(f => ({ ...f, subType: e.target.value }))}
-        style={{ width: "100%", maxWidth: "100%" }}
       >
         <option value="">Sous-type (tous)</option>
         {EVENT_SUBTYPES.map(sub =>
@@ -89,7 +77,6 @@ export default function MapFilterMenu({
         disabled={!showPoints}
         value={filters.actorType}
         onChange={e => setFilters(f => ({ ...f, actorType: e.target.value }))}
-        style={{ width: "100%", maxWidth: "100%" }}
       >
         <option value="">Type d'acteur (tous)</option>
         {ACTOR_TYPES.map(a =>
@@ -97,7 +84,7 @@ export default function MapFilterMenu({
         )}
       </select>
       {/* Dates */}
-      <div style={{ margin: "9px 0" }}>
+      <div className="date-row">
         <label>
           Du&nbsp;
           <input
