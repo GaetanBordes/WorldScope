@@ -1,0 +1,169 @@
+.profile-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #17372d 0%, #0a1e29 80%, #174233 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 38px 10px;
+}
+
+.profile-card {
+  background: rgba(19, 37, 36, 0.97);
+  border-radius: 18px;
+  box-shadow: 0 4px 32px #13d1b225, 0 2px 18px #112d2650;
+  padding: 38px 34px 28px 34px;
+  max-width: 380px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid #1cb39136;
+}
+
+.profile-avatar {
+  width: 74px;
+  height: 74px;
+  margin-bottom: 10px;
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px #29ffd144, 0 1px 4px #1e9f6877;
+    background: #182b26;
+    border: 2.5px solid #33ebae;
+    object-fit: cover;
+  }
+}
+
+.profile-title {
+  font-size: 1.55rem;
+  font-weight: 700;
+  margin: 7px 0 18px 0;
+  color: #42ffb6;
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 16px #18b67855;
+  text-align: center;
+}
+
+.profile-details {
+  width: 100%;
+  margin-bottom: 15px;
+  p {
+    margin: 11px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    .profile-label {
+      color: #77ffe0;
+      font-weight: 500;
+      margin-right: 6px;
+      font-size: 1.09rem;
+    }
+    .profile-input {
+      margin-top: 4px;
+      margin-bottom: 7px;
+      width: 100%;
+      padding: 8px 12px;
+      font-size: 1.03rem;
+      border-radius: 6px;
+      border: 1px solid #2fddbf55;
+      background: #183134;
+      color: #aafff0;
+      outline: none;
+      transition: border 0.16s;
+      &:focus {
+        border: 1.5px solid #43e3b3;
+        background: #183134e0;
+      }
+    }
+    .profile-btn {
+      margin-top: 3px;
+      margin-left: 0;
+      padding: 7px 18px;
+      background: linear-gradient(90deg, #3af9bb 5%, #29ddac 90%);
+      color: #002219;
+      font-weight: bold;
+      border-radius: 7px;
+      border: none;
+      font-size: 1rem;
+      box-shadow: 0 1px 10px #23c69344;
+      cursor: pointer;
+      transition: background 0.15s, color 0.12s, transform 0.13s;
+      &:hover, &:focus {
+        background: linear-gradient(90deg, #1fd6ac 5%, #24b191 95%);
+        color: #fff;
+        transform: scale(1.04);
+      }
+    }
+  }
+}
+
+.profile-actions {
+  width: 100%;
+  margin-bottom: 20px;
+  .profile-btn {
+    width: 100%;
+    background: linear-gradient(90deg, #22e9c9 8%, #32b3f6 92%);
+    color: #001b12;
+    font-weight: 700;
+    border-radius: 7px;
+    padding: 9px 0;
+    font-size: 1.07rem;
+    margin-top: 10px;
+    box-shadow: 0 2px 16px #18bbdc44, 0 1px 8px #43eec055;
+    &:hover, &:focus {
+      background: linear-gradient(90deg, #32b3f6 10%, #22e9c9 90%);
+      color: #163738;
+    }
+  }
+}
+
+.profile-delete {
+  width: 100%;
+  margin-top: 20px;
+  text-align: left;
+  h3 {
+    color: #ff7f7f;
+    font-size: 1.13rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 8px #a4122255;
+  }
+  .profile-input {
+    margin-bottom: 8px;
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 1.01rem;
+    border-radius: 6px;
+    border: 1px solid #e89b9955;
+    background: #2b2224;
+    color: #ffeaea;
+    &:focus {
+      border: 1.5px solid #ff4b4b;
+      background: #36182b;
+    }
+  }
+  .profile-btn-delete {
+    background: linear-gradient(90deg, #ff3b6b 8%, #ed9d77 92%);
+    color: #fff5f5;
+    font-weight: bold;
+    border-radius: 7px;
+    padding: 8px 0;
+    font-size: 1.01rem;
+    width: 100%;
+    margin-top: 2px;
+    box-shadow: 0 2px 12px #e0404099;
+    &:hover, &:focus {
+      background: linear-gradient(90deg, #ffbdbd 10%, #ff3b6b 90%);
+      color: #93001b;
+    }
+  }
+}
+
+.profile-loader {
+  color: #48ffb8;
+  font-size: 1.3rem;
+  padding: 80px 0;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
