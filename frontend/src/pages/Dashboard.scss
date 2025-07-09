@@ -1,0 +1,234 @@
+.dashboard-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0d2127 0%, #0a1e29 50%, #174233 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 26px 6vw 8px 6vw;
+  background: rgba(10, 25, 40, 0.95);
+  border-bottom: 1.5px solid #194d3c;
+  box-shadow: 0 2px 12px 0 #193b3b55;
+  .dashboard-logo {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: #174233;
+    border: 2px solid #3edc93;
+    box-shadow: 0 1px 10px 1px #11775566;
+    margin-right: 26px;
+    flex-shrink: 0;
+  }
+  .dashboard-title-zone {
+    flex: 1;
+    min-width: 0;
+    h1 {
+      font-size: 2.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0;
+      letter-spacing: 0.03em;
+      span {
+        color: #42ffb6;
+        text-shadow: 0 0 8px #47c09060;
+      }
+    }
+    .dashboard-slogan {
+      margin: 2px 0 0 0;
+      color: #8efdd0;
+      font-size: 1.16rem;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      text-shadow: 0 1px 6px #0c533655;
+    }
+  }
+}
+
+.dashboard-content {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 36px 4vw 24px 4vw;
+  gap: 48px;
+}
+
+.dashboard-globe {
+  flex: 1 1 390px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .dashboard-globe-art {
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    box-shadow: 0 8px 80px #37ffb822, 0 1px 24px #0c2a1766;
+    background: radial-gradient(circle at 70% 38%, #39f2c9 60%, #11363a 100%);
+    position: relative;
+    margin: 0 36px;
+    &::after {
+      content: "";
+      position: absolute;
+      left: 30%;
+      top: 14%;
+      width: 70px;
+      height: 12px;
+      background: rgba(255,255,255,0.22);
+      border-radius: 50%;
+      filter: blur(0.7px);
+      transform: rotate(-14deg);
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      right: 11%;
+      top: 60%;
+      width: 37px;
+      height: 7px;
+      background: rgba(255,255,255,0.14);
+      border-radius: 50%;
+      filter: blur(0.9px);
+      transform: rotate(7deg);
+    }
+    // BOUTON CENTRE GLOBE
+    .dashboard-globe-btn {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(90deg, #32f6b8 10%, #32b3f6 90%);
+      color: #001b12;
+      font-weight: bold;
+      font-size: 1.19rem;
+      border: none;
+      border-radius: 30px;
+      padding: 15px 28px;
+      box-shadow: 0 6px 30px #3eeeb944, 0 1.5px 12px #1b7c6855;
+      cursor: pointer;
+      transition: background 0.14s, color 0.14s, transform 0.13s, box-shadow 0.2s;
+      outline: none;
+      z-index: 2;
+      opacity: 0.97;
+      letter-spacing: 0.03em;
+
+      &:hover, &:focus {
+        background: linear-gradient(90deg, #32b3f6 10%, #32f6b8 90%);
+        color: #10272e;
+        transform: translate(-50%, -53%) scale(1.07);
+        box-shadow: 0 10px 34px #3edca644, 0 2.5px 15px #136c8855;
+      }
+    }
+  }
+}
+
+.dashboard-info {
+  flex: 1 1 320px;
+  background: rgba(10,26,34,0.95);
+  border-radius: 15px;
+  padding: 40px 32px 24px 32px;
+  color: #e7ffe6;
+  box-shadow: 0 2px 16px #0e292d44;
+  max-width: 430px;
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 17px;
+    color: #48f7bb;
+    letter-spacing: 0.01em;
+    text-shadow: 0 1px 8px #25e0a233;
+  }
+  ul {
+    padding-left: 20px;
+    font-size: 1.08rem;
+    li {
+      margin-bottom: 14px;
+      b {
+        color: #42ffb6;
+      }
+    }
+  }
+}
+
+.dashboard-footer {
+  text-align: center;
+  padding: 18px 0 8px 0;
+  color: #62eabf;
+  font-size: 1.02rem;
+  letter-spacing: 0.03em;
+  opacity: 0.82;
+  background: none;
+}
+
+/* ----------- Responsive ----------- */
+@media (max-width: 900px) {
+  .dashboard-content {
+    flex-direction: column;
+    gap: 26px;
+    padding: 22px 2vw;
+    align-items: center;
+  }
+}
+
+@media (max-width: 650px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 2vw 10px 2vw;
+    .dashboard-logo {
+      margin: 0 0 12px 0;
+    }
+    .dashboard-title-zone {
+      text-align: center;
+      h1 {
+        font-size: 1.47rem;
+      }
+      .dashboard-slogan {
+        font-size: 1.06rem;
+      }
+    }
+  }
+  .dashboard-content {
+    gap: 15px;
+    padding: 11px 0 12px 0;
+  }
+  .dashboard-globe .dashboard-globe-art {
+    width: 60vw;
+    height: 60vw;
+    min-width: 140px;
+    min-height: 140px;
+    max-width: 260px;
+    max-height: 260px;
+    margin: 0;
+  }
+  .dashboard-info {
+    max-width: 95vw;
+    padding: 26px 8vw 16px 8vw;
+    h2 { font-size: 1.09rem; }
+    ul { font-size: 1.01rem; }
+  }
+}
+
+@media (max-width: 410px) {
+  .dashboard-header .dashboard-logo {
+    width: 48px;
+    height: 48px;
+  }
+  .dashboard-header .dashboard-title-zone h1 {
+    font-size: 1.13rem;
+  }
+  .dashboard-globe .dashboard-globe-art {
+    min-width: 90px;
+    min-height: 90px;
+    width: 38vw;
+    height: 38vw;
+  }
+  .dashboard-info {
+    padding: 12px 4vw;
+    h2 { font-size: 0.92rem; }
+  }
+}
