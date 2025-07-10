@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import api from "../services/api";
 import useAuthStore from "../stores/authStore";
 import { useNavigate, Link } from "react-router-dom";
@@ -8,7 +8,15 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const setAuth = useAuthStore((s) => s.setAuth);
+  const isAuthenticated = !!useAuthStore((s) => s.token); // <-- Ajout
   const navigate = useNavigate();
+
+  // Redirection automatique si déjà connecté
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
