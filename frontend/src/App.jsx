@@ -5,7 +5,6 @@ import Navbar from './components/Navbar';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
 import Signup from './pages/Signup';
-import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import MapPage from './pages/MapPage';
 import ProfilePage from './pages/ProfilePage';
@@ -28,7 +27,7 @@ function App() {
           } />
 
           {/* Toutes routes publiques */}
-          <Route path="/login" element={<Login />} />
+
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={
             <ErrorBoundary>

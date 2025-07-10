@@ -1,37 +1,24 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import useAuthStore from "../stores/authStore";
 import "./Navbar.scss";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { user, setAuth, clearAuth, token } = useAuthStore();
   const location = useLocation();
-  const navigate = useNavigate();
 
   const closeMenu = () => setMenuOpen(false);
 
-  // Liens du menu
+  // Liens du menu (plus besoin de cacher quoi que ce soit)
   const links = [
+    { to: "/dashboard", label: "Accueil" },
     { to: "/map", label: "Carte" },
     { to: "/profile", label: "Profil" },
   ];
 
-  // Gère la déconnexion
-  const handleLogout = () => {
-    if (typeof clearAuth === "function") clearAuth();
-    else if (typeof setAuth === "function") setAuth(null);
-    closeMenu();
-    navigate("/login");
-  };
-
-  // Lien d'accueil dynamique :
-  const homeLink = token ? "/dashboard" : "/";
-
   return (
     <nav className="navbar-glass">
       <div className="navbar-globe-brand">
-        <Link to={homeLink} onClick={closeMenu}>
+        <Link to="/dashboard" onClick={closeMenu}>
           <img
             src="/VERT_worldscope.webp"
             alt="WorldScope"
@@ -63,22 +50,6 @@ export default function Navbar() {
             </Link>
           </li>
         ))}
-
-        {user && (
-          <li className="navbar-greeting">
-            <span>
-              <i>Bonjour, {user.email?.split("@")[0] || "explorateur"}</i>
-            </span>
-          </li>
-        )}
-
-        {user && (
-          <li>
-            <button className="navbar-logout" onClick={handleLogout}>
-              Déconnexion
-            </button>
-          </li>
-        )}
       </ul>
     </nav>
   );
