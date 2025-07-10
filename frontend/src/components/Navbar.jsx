@@ -5,7 +5,7 @@ import "./Navbar.scss";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { user, setAuth, clearAuth } = useAuthStore();
+  const { user, setAuth, clearAuth, token } = useAuthStore();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -13,24 +13,25 @@ export default function Navbar() {
 
   // Liens du menu
   const links = [
-    { to: "/", label: "Accueil" },
     { to: "/map", label: "Carte" },
     { to: "/profile", label: "Profil" },
   ];
 
   // Gère la déconnexion
   const handleLogout = () => {
-    // Préfère clearAuth ou setAuth(null) selon ton store
     if (typeof clearAuth === "function") clearAuth();
     else if (typeof setAuth === "function") setAuth(null);
     closeMenu();
     navigate("/login");
   };
 
+  // Lien d'accueil dynamique :
+  const homeLink = token ? "/dashboard" : "/";
+
   return (
     <nav className="navbar-glass">
       <div className="navbar-globe-brand">
-        <Link to="/" onClick={closeMenu}>
+        <Link to={homeLink} onClick={closeMenu}>
           <img
             src="/VERT_worldscope.webp"
             alt="WorldScope"
