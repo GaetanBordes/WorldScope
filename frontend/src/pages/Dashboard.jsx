@@ -1,5 +1,6 @@
 import "./Dashboard.scss";
 import { useNavigate } from "react-router-dom";
+import Globe from "../components/Globe";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -23,15 +24,17 @@ export default function Dashboard() {
       </header>
       <main className="dashboard-content">
         <section className="dashboard-globe">
-          <div className="dashboard-globe-art">
-            <button
-              className="dashboard-globe-btn"
-              onClick={() => navigate("/map")}
-            >
-              🌍 Parcourir le Globe
-            </button>
-          </div>
-        </section>
+  <div className="dashboard-globe-art" style={{ position: "relative" }}>
+    <Globe />
+    <button
+      className="dashboard-globe-btn"
+      style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)" }}
+      onClick={() => navigate("/map")}
+    >
+      🌍 Parcourir le Globe
+    </button>
+  </div>
+</section>
         <section className="dashboard-info">
           <h2>Qu’allez-vous explorer aujourd’hui&nbsp;?</h2>
           <ul>

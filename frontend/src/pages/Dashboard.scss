@@ -232,3 +232,17 @@
     h2 { font-size: 0.92rem; }
   }
 }
+
+.dashboard-cobe-globe {
+  width: 320px;
+  height: 320px;
+  margin: 0 auto;
+  @media (max-width: 650px) {
+    width: 65vw;
+    height: 65vw;
+    min-width: 110px;
+    min-height: 110px;
+    max-width: 270px;
+    max-height: 270px;
+  }
+}
