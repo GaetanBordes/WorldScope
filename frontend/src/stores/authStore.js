@@ -1,18 +1,29 @@
-import { create } from 'zustand';
+import { create } from "zustand";
+
+function safeParseAuth() {
+  try {
+    const raw = localStorage.getItem("auth");
+    if (!raw || raw === "undefined") return null;
+    return JSON.parse(raw);
+  } catch (e) {
+    // Données invalides, on reset
+    localStorage.removeItem("auth");
+    return null;
+  }
+}
 
 const useAuthStore = create((set) => ({
-  token: localStorage.getItem('token') || null,
-  user: JSON.parse(localStorage.getItem('user')) || null,
-  setAuth: ({ token, user }) => {
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
-    set({ token, user });
+  auth: safeParseAuth(),
+  setAuth: (auth) => {
+    set({ auth });
+    if (auth) localStorage.setItem("auth", JSON.stringify(auth));
+    else localStorage.removeItem("auth");
   },
   clearAuth: () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    set({ token: null, user: null });
+    set({ auth: null });
+    localStorage.removeItem("auth");
   },
+  user: null,
 }));
 
 export default useAuthStore;
