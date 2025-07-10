@@ -10,22 +10,41 @@ import Dashboard from './pages/Dashboard';
 import MapPage from './pages/MapPage';
 import ProfilePage from './pages/ProfilePage';
 
+// import ProtectedRoute from './components/ProtectedRoute'; // plus besoin
+
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
+
       {/* décale le contenu pour laisser la place à la navbar fixe */}
       <div style={{ paddingTop: '3.5rem', height: '100vh', overflow: 'hidden' }}>
         <Routes>
-          {/* Page d'accueil publique */}
-          <Route path="/" element={<Dashboard />} />
+          {/* Accueil = Dashboard */}
+          <Route path="/" element={
+            <ErrorBoundary>
+              <Dashboard />
+            </ErrorBoundary>
+          } />
 
-          {/* Routes publiques */}
-          <Route path="/login"  element={<Login />} />
+          {/* Toutes routes publiques */}
+          <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/map" element={<MapPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/dashboard" element={
+            <ErrorBoundary>
+              <Dashboard />
+            </ErrorBoundary>
+          } />
+          <Route path="/map" element={
+            <ErrorBoundary>
+              <MapPage />
+            </ErrorBoundary>
+          } />
+          <Route path="/profile" element={
+            <ErrorBoundary>
+              <ProfilePage />
+            </ErrorBoundary>
+          } />
 
           {/* Catch-all */}
           <Route path="*" element={<div>Page non trouvée</div>} />
